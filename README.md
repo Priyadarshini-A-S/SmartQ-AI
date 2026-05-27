@@ -1,65 +1,268 @@
 # Smart Aadhaar Queue System
 
-This is a full-stack MERN-style project for:
-- Appointment booking with OTP confirmation
-- Booking confirmation slip
+A full-stack MERN-style queue management and appointment booking system designed for Aadhaar service centers. The project streamlines appointment scheduling, OTP verification, walk-in token management, and live queue tracking.
+
+---
+
+## Features
+
+- Appointment booking with OTP verification
+- Booking confirmation slip generation
 - Walk-in token generation
-- Token status tracking
-- Live queue dashboard with auto refresh
+- Real-time token status tracking
+- Live queue dashboard with auto-refresh
+- Atomic token sequencing per center/day
+- Queue progression management
+
+---
 
 ## Tech Stack
-- Client: React + Vite
-- Server: Node.js + Express
-- Database layer: MongoDB + Mongoose models
+
+### Frontend
+- React
+- Vite
+
+### Backend
+- Node.js
+- Express.js
+
+### Database
+- MongoDB
+- Mongoose
+
+### Testing
+- Jest
+- Supertest
+- mongodb-memory-server
+
+---
 
 ## Project Structure
-- `client/` - customer side UI prototype
-- `server/` - API for bookings, OTP and queue status
 
-## Run the Project
+```bash
+SmartQ-AI/
+│
+├── client/        # Frontend React application
+├── server/        # Backend API server
+└── README.md
+```
 
-### 1. Backend
+---
+
+## Installation & Setup
+
+### 1. Clone Repository
+
+```bash
+git clone https://github.com/Priyadarshini-A-S/SmartQ-AI.git
+cd SmartQ-AI
+```
+
+---
+
+# Backend Setup
+
+Navigate to server folder:
+
 ```bash
 cd server
+```
+
+Install dependencies:
+
+```bash
 npm install
+```
+
+Create environment file:
+
+```bash
 copy .env.example .env
+```
+
+Start backend server:
+
+```bash
 npm run dev
 ```
 
-Backend starts at `http://localhost:5000`.
+Backend runs on:
 
-Before running backend, ensure MongoDB is running locally on `mongodb://127.0.0.1:27017` or update `MONGO_URI` in `.env`.
+```bash
+http://localhost:5000
+```
 
-### 2. Frontend
+---
+
+## MongoDB Setup
+
+Ensure MongoDB is running locally:
+
+```bash
+mongodb://127.0.0.1:27017
+```
+
+Or update the `MONGO_URI` inside `.env`.
+
+Example:
+
+```env
+PORT=5000
+MONGO_URI=mongodb://127.0.0.1:27017/smartq
+```
+
+---
+
+# Frontend Setup
+
+Open another terminal:
+
 ```bash
 cd client
+```
+
+Install dependencies:
+
+```bash
 npm install
+```
+
+Run frontend:
+
+```bash
 npm run dev
 ```
 
-Frontend starts at `http://localhost:5173`.
-In development, Vite proxies `/api` requests to backend `http://localhost:5000`.
+Frontend runs on:
 
-## Run Automated Tests
+```bash
+http://localhost:5173
+```
 
-### Backend API tests
+In development mode, Vite proxies `/api` requests to:
+
+```bash
+http://localhost:5000
+```
+
+---
+
+# Running Tests
+
+Navigate to backend:
+
 ```bash
 cd server
+```
+
+Run tests:
+
+```bash
 npm test
 ```
 
-This runs Jest + Supertest integration tests against an in-memory MongoDB instance.
+This executes:
+- Jest integration tests
+- Supertest API tests
+- In-memory MongoDB instance
 
-## API Endpoints
-- `POST /api/bookings/request-otp`
-- `POST /api/bookings/verify-otp`
-- `GET /api/bookings/:bookingId`
-- `POST /api/tokens/walkin`
-- `GET /api/tokens/status/:tokenId`
-- `GET /api/tokens/live?centerName=...`
-- `POST /api/tokens/advance`
+---
 
-## Notes
-- OTP is mocked for development and returned as `debugOtp`.
-- Token sequencing is atomic per center/day to avoid duplicate token numbers.
-- Queue advance updates token progression (`waiting` -> `serving` -> `completed`).
+# API Endpoints
+
+## Booking APIs
+
+### Request OTP
+
+```http
+POST /api/bookings/request-otp
+```
+
+### Verify OTP
+
+```http
+POST /api/bookings/verify-otp
+```
+
+### Get Booking Details
+
+```http
+GET /api/bookings/:bookingId
+```
+
+---
+
+## Token APIs
+
+### Generate Walk-in Token
+
+```http
+POST /api/tokens/walkin
+```
+
+### Get Token Status
+
+```http
+GET /api/tokens/status/:tokenId
+```
+
+### Live Queue Dashboard
+
+```http
+GET /api/tokens/live?centerName=...
+```
+
+### Advance Queue
+
+```http
+POST /api/tokens/advance
+```
+
+---
+
+# System Workflow
+
+1. User books appointment
+2. OTP verification confirms booking
+3. Booking confirmation slip generated
+4. Walk-in users receive tokens
+5. Live queue dashboard updates automatically
+6. Queue progression managed in real time
+
+---
+
+# Development Notes
+
+- OTP is mocked during development and returned as `debugOtp`
+- Token numbering is atomic to prevent duplicate tokens
+- Queue states:
+  - `waiting`
+  - `serving`
+  - `completed`
+
+---
+
+# Future Improvements
+
+- Aadhaar API integration
+- SMS OTP service
+- Admin analytics dashboard
+- QR-based token scanning
+- Multi-center management
+- Deployment with Docker
+
+---
+
+# Author
+
+**Priyadarshini A S**  
+Computer Science Engineering Student
+
+GitHub:  
+https://github.com/Priyadarshini-A-S
+
+---
+
+# License
+
+This project is for educational and prototype purposes.
